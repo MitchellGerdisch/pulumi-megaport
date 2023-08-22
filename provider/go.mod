@@ -9,7 +9,7 @@ require (
 	github.com/megaport/terraform-provider-megaport v0.2.10
 	// MITCHEND
 	github.com/pulumi/pulumi-terraform-bridge/v3 v3.57.0
-	github.com/pulumi/pulumi/sdk/v3 v3.76.1
+	github.com/pulumi/pulumi/sdk/v3 v3.76.1 // indirect
 )
 
 require (
@@ -155,7 +155,7 @@ require (
 	github.com/mattn/go-colorable v0.1.12 // indirect
 	github.com/mattn/go-isatty v0.0.18 // indirect
 	github.com/mattn/go-runewidth v0.0.13 // indirect
-	github.com/megaport/megaportgo v0.1.16-beta
+	github.com/megaport/megaportgo v0.1.16-beta // indirect
 	github.com/mgutz/ansi v0.0.0-20170206155736-9520e82c474b // indirect
 	github.com/mitchellh/cli v1.1.5 // indirect
 	github.com/mitchellh/copystructure v1.2.0 // indirect

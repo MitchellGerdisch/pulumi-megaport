@@ -35,13 +35,16 @@ import (
 	// Reference the module name in TF provider's go.mod
 	// See: https://github.com/megaport/terraform-provider-megaport/blob/main/go.mod
 	// Add the folders - also seen in "github.com/megaport/terraform-provider-megaport/provider.go
-	"github.com/megaport/megaportgo"
+	// MITCHEND
 	"github.com/megaport/terraform-provider-megaport/data_megaport"
 	"github.com/megaport/terraform-provider-megaport/resource_megaport"
 	"github.com/megaport/terraform-provider-megaport/terraform_utility"
-	// MITCHEND
 	"github.com/MitchellGerdisch/pulumi-megaport/provider/pkg/version"
-	"github.com/pulumi/pulumi/sdk/v3/go/common/resource"
+	// MITCHSTART
+	// tfgen error: its imported but not used
+	// So commenting out
+	// "github.com/pulumi/pulumi/sdk/v3/go/common/resource"
+	// MITCHEND
 	// MITCHSTART
 	// - I'm not sure where this reference came from but it's wrong, so commenting out since we have reference above
 	//"github.com/terraform-providers/terraform-provider-megaport/megaport"
@@ -71,7 +74,8 @@ const (
 func Provider() tfbridge.ProviderInfo {
 	// Instantiate the Terraform provider
 	// MITCHSTART
-	p := shimv1.NewProvider(megaport.Provider())
+	p := shimv1.NewProvider(megaport.Provider().(*schema.Provider))
+
 	// MITCHEND
 
 	// Create a Pulumi provider mapping
@@ -178,7 +182,9 @@ func Provider() tfbridge.ProviderInfo {
 	// For more information, please reference: https://pkg.go.dev/github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge#ProviderInfo.ComputeTokens
 	prov.MustComputeTokens(tokens.SingleModule("megaport_", mainMod,
 		tokens.MakeStandard(mainPkg)))
+	// MITCHSTART - not found when tfgenning so commenting out
 	// prov.MustApplyAutoAliasing()
+	// MITCHEND
 	prov.SetAutonaming(255, "-")
 
 	return prov
