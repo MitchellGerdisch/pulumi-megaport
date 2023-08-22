@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package xyz
+package megaport
 
 import (
 	"fmt"
@@ -20,39 +20,64 @@ import (
 
 	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge"
 	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge/tokens"
-	shim "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfshim"
-	shimv2 "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfshim/sdk-v2"
-	"github.com/pulumi/pulumi-xyz/provider/pkg/version"
+	// MITCHSTART 
+	// Unused shims
+	// shim "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfshim"
+	// shimv2 "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfshim/sdk-v2"
+	// MITCHEND 
+	
+	// MITCHSTART
+	// - based on github provider using shimv1
+	shimv1 "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfshim/sdk-v1"
+	// MITCHEND
+
+	// MITCHSTART
+	// Reference the module name in TF provider's go.mod
+	// See: https://github.com/megaport/terraform-provider-megaport/blob/main/go.mod
+	// Add the folders - also seen in "github.com/megaport/terraform-provider-megaport/provider.go
+	"github.com/megaport/megaportgo"
+	"github.com/megaport/terraform-provider-megaport/data_megaport"
+	"github.com/megaport/terraform-provider-megaport/resource_megaport"
+	"github.com/megaport/terraform-provider-megaport/terraform_utility"
+	// MITCHEND
+	"github.com/MitchellGerdisch/pulumi-megaport/provider/pkg/version"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/resource"
-	"github.com/terraform-providers/terraform-provider-xyz/xyz"
+	// MITCHSTART
+	// - I'm not sure where this reference came from but it's wrong, so commenting out since we have reference above
+	//"github.com/terraform-providers/terraform-provider-megaport/megaport"
+	// MITCHEND
 )
 
 // all of the token components used below.
 const (
 	// This variable controls the default name of the package in the package
 	// registries for nodejs and python:
-	mainPkg = "xyz"
+	mainPkg = "megaport"
 	// modules:
-	mainMod = "index" // the xyz module
+	mainMod = "index" // the megaport module
 )
 
 // preConfigureCallback is called before the providerConfigure function of the underlying provider.
 // It should validate that the provider can be configured, and provide actionable errors in the case
 // it cannot be. Configuration variables can be read from `vars` using the `stringValue` function -
 // for example `stringValue(vars, "accessKey")`.
-func preConfigureCallback(vars resource.PropertyMap, c shim.ResourceConfig) error {
-	return nil
-}
+// MITCHSTART - not seen in github example and doesn't compile - so commenting out
+// func preConfigureCallback(vars resource.PropertyMap, c shimv1.ResourceConfig) error {
+// 	return nil
+// }
+// MITCHEND
 
 // Provider returns additional overlaid schema and metadata associated with the provider..
 func Provider() tfbridge.ProviderInfo {
 	// Instantiate the Terraform provider
-	p := shimv2.NewProvider(xyz.Provider())
+	// MITCHSTART
+	p := shimv1.NewProvider(megaport.Provider())
+	// MITCHEND
 
 	// Create a Pulumi provider mapping
 	prov := tfbridge.ProviderInfo{
 		P:    p,
-		Name: "xyz",
+		Name: "megaport",
 		// DisplayName is a way to be able to change the casing of the provider
 		// name when being displayed on the Pulumi registry
 		DisplayName: "",
@@ -71,14 +96,14 @@ func Provider() tfbridge.ProviderInfo {
 		// for use in Pulumi programs
 		// e.g https://github.com/org/pulumi-provider-name/releases/
 		PluginDownloadURL: "",
-		Description:       "A Pulumi package for creating and managing xyz cloud resources.",
+		Description:       "A Pulumi package for creating and managing megaport cloud resources.",
 		// category/cloud tag helps with categorizing the package in the Pulumi Registry.
 		// For all available categories, see `Keywords` in
 		// https://www.pulumi.com/docs/guides/pulumi-packages/schema/#package.
-		Keywords:   []string{"pulumi", "xyz", "category/cloud"},
+		Keywords:   []string{"pulumi", "megaport", "category/cloud"},
 		License:    "Apache-2.0",
 		Homepage:   "https://www.pulumi.com",
-		Repository: "https://github.com/pulumi/pulumi-xyz",
+		Repository: "https://github.com/MitchellGerdisch/pulumi-megaport",
 		// The GitHub Org for the provider - defaults to `terraform-providers`. Note that this
 		// should match the TF provider module's require directive, not any replace directives.
 		GitHubOrg: "",
@@ -92,7 +117,7 @@ func Provider() tfbridge.ProviderInfo {
 			// 	},
 			// },
 		},
-		PreConfigureCallback: preConfigureCallback,
+		// PreConfigureCallback: preConfigureCallback,
 		Resources:            map[string]*tfbridge.ResourceInfo{
 			// Map each resource in the Terraform provider to a Pulumi type. Two examples
 			// are below - the single line form is the common case. The multi-line form is
@@ -151,9 +176,9 @@ func Provider() tfbridge.ProviderInfo {
 	// These are new API's that you may opt to use to automatically compute resource tokens,
 	// and apply auto aliasing for full backwards compatibility.
 	// For more information, please reference: https://pkg.go.dev/github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge#ProviderInfo.ComputeTokens
-	prov.MustComputeTokens(tokens.SingleModule("xyz_", mainMod,
+	prov.MustComputeTokens(tokens.SingleModule("megaport_", mainMod,
 		tokens.MakeStandard(mainPkg)))
-	prov.MustApplyAutoAliasing()
+	// prov.MustApplyAutoAliasing()
 	prov.SetAutonaming(255, "-")
 
 	return prov

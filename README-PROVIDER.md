@@ -1,6 +1,6 @@
-# Foo Resource Provider
+# megaport Resource Provider
 
-The Foo Resource Provider lets you manage [Foo](http://example.com) resources.
+The megaport Resource Provider lets you manage [megaport](http://example.com) resources.
 
 ## Installing
 
@@ -11,13 +11,13 @@ This package is available for several languages/platforms:
 To use from JavaScript or TypeScript in Node.js, install using either `npm`:
 
 ```bash
-npm install @pulumi/foo
+npm install @pulumi/megaport
 ```
 
 or `yarn`:
 
 ```bash
-yarn add @pulumi/foo
+yarn add @pulumi/megaport
 ```
 
 ### Python
@@ -25,7 +25,7 @@ yarn add @pulumi/foo
 To use from Python, install using `pip`:
 
 ```bash
-pip install pulumi_foo
+pip install pulumi_megaport
 ```
 
 ### Go
@@ -33,7 +33,7 @@ pip install pulumi_foo
 To use from Go, use `go get` to grab the latest version of the library:
 
 ```bash
-go get github.com/pulumi/pulumi-foo/sdk/go/...
+go get github.com/pulumi/pulumi-megaport/sdk/go/...
 ```
 
 ### .NET
@@ -41,16 +41,16 @@ go get github.com/pulumi/pulumi-foo/sdk/go/...
 To use from .NET, install using `dotnet add package`:
 
 ```bash
-dotnet add package Pulumi.Foo
+dotnet add package Pulumi.megaport
 ```
 
 ## Configuration
 
-The following configuration points are available for the `foo` provider:
+The following configuration points are available for the `megaport` provider:
 
-- `foo:apiKey` (environment: `FOO_API_KEY`) - the API key for `foo`
-- `foo:region` (environment: `FOO_REGION`) - the region in which to deploy resources
+- `megaport:apiKey` (environment: `megaport_API_KEY`) - the API key for `megaport`
+- `megaport:region` (environment: `megaport_REGION`) - the region in which to deploy resources
 
 ## Reference
 
-For detailed reference documentation, please visit [the Pulumi registry](https://www.pulumi.com/registry/packages/foo/api-docs/).
+For detailed reference documentation, please visit [the Pulumi registry](https://www.pulumi.com/registry/packages/megaport/api-docs/).
