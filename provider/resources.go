@@ -35,11 +35,14 @@ import (
 	// Reference the module name in TF provider's go.mod
 	// See: https://github.com/megaport/terraform-provider-megaport/blob/main/go.mod
 	// Add the folders - also seen in "github.com/megaport/terraform-provider-megaport/provider.go
-	// MITCHEND
-	"github.com/megaport/terraform-provider-megaport/data_megaport"
-	"github.com/megaport/terraform-provider-megaport/resource_megaport"
-	"github.com/megaport/terraform-provider-megaport/terraform_utility"
+	// "github.com/megaport/megaportgo"
+	"github.com/megaport/terraform-provider-megaport/provider"
+	// "github.com/megaport/terraform-provider-megaport/data_megaport"
+	// "github.com/megaport/terraform-provider-megaport/resource_megaport"
+	// "github.com/megaport/terraform-provider-megaport/terraform_utility"
 	"github.com/MitchellGerdisch/pulumi-megaport/provider/pkg/version"
+	// MITCHEND
+
 	// MITCHSTART
 	// tfgen error: its imported but not used
 	// So commenting out
@@ -110,7 +113,7 @@ func Provider() tfbridge.ProviderInfo {
 		Repository: "https://github.com/MitchellGerdisch/pulumi-megaport",
 		// The GitHub Org for the provider - defaults to `terraform-providers`. Note that this
 		// should match the TF provider module's require directive, not any replace directives.
-		GitHubOrg: "",
+		GitHubOrg: "megaport",
 		Config:    map[string]*tfbridge.SchemaInfo{
 			// Add any required configuration here, or remove the example below if
 			// no additional points are required.
