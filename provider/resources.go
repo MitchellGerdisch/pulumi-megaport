@@ -20,38 +20,10 @@ import (
 
 	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge"
 	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge/tokens"
-	// MITCHSTART 
-	// Unused shims
-	// shim "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfshim"
-	// shimv2 "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfshim/sdk-v2"
-	// MITCHEND 
-	
-	// MITCHSTART
-	// - based on github provider using shimv1
+
+	megaport "github.com/megaport/terraform-provider-megaport"
 	shimv1 "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfshim/sdk-v1"
-	// MITCHEND
-
-	// MITCHSTART
-	// Reference the module name in TF provider's go.mod
-	// See: https://github.com/megaport/terraform-provider-megaport/blob/main/go.mod
-	// Add the folders - also seen in "github.com/megaport/terraform-provider-megaport/provider.go
-	// "github.com/megaport/megaportgo"
-	"github.com/megaport/terraform-provider-megaport/provider"
-	// "github.com/megaport/terraform-provider-megaport/data_megaport"
-	// "github.com/megaport/terraform-provider-megaport/resource_megaport"
-	// "github.com/megaport/terraform-provider-megaport/terraform_utility"
 	"github.com/MitchellGerdisch/pulumi-megaport/provider/pkg/version"
-	// MITCHEND
-
-	// MITCHSTART
-	// tfgen error: its imported but not used
-	// So commenting out
-	// "github.com/pulumi/pulumi/sdk/v3/go/common/resource"
-	// MITCHEND
-	// MITCHSTART
-	// - I'm not sure where this reference came from but it's wrong, so commenting out since we have reference above
-	//"github.com/terraform-providers/terraform-provider-megaport/megaport"
-	// MITCHEND
 )
 
 // all of the token components used below.
@@ -62,24 +34,14 @@ const (
 	// modules:
 	mainMod = "index" // the megaport module
 )
-
-// preConfigureCallback is called before the providerConfigure function of the underlying provider.
-// It should validate that the provider can be configured, and provide actionable errors in the case
-// it cannot be. Configuration variables can be read from `vars` using the `stringValue` function -
-// for example `stringValue(vars, "accessKey")`.
-// MITCHSTART - not seen in github example and doesn't compile - so commenting out
-// func preConfigureCallback(vars resource.PropertyMap, c shimv1.ResourceConfig) error {
-// 	return nil
-// }
-// MITCHEND
-
 // Provider returns additional overlaid schema and metadata associated with the provider..
 func Provider() tfbridge.ProviderInfo {
 	// Instantiate the Terraform provider
-	// MITCHSTART
-	p := shimv1.NewProvider(megaport.Provider().(*schema.Provider))
 
-	// MITCHEND
+	//p := shimv2.NewProvider(megaport.Provider())
+	p := shimv1.NewProvider(megaport.Provider())
+
+
 
 	// Create a Pulumi provider mapping
 	prov := tfbridge.ProviderInfo{
